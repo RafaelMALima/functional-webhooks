@@ -3,16 +3,12 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 import Web.Scotty
-import Control.Monad.IO.Class        (liftIO)
 import Data.ByteString.Lazy.Char8 as B
-import Data.Aeson                    
-import Data.Aeson.Types              (Parser)
+import Data.Aeson
 import GHC.Generics                  (Generic)
 import Network.HTTP.Types
 import Database.SQLite.Simple
-import Database.SQLite.Simple.FromRow
 import Network.Curl
-import Text.Read                     (readMaybe)
 import qualified Data.Text as T      
 import qualified Data.Text.Read as TR
 import qualified Data.Text.Lazy as TL
@@ -85,10 +81,10 @@ prepareOptsNoToken j =
   ]
 
 curlRequest :: String -> [CurlOption] -> IO ()
-curlRequest url opts = do (code, body) <- curlGetString url opts
+curlRequest url opts = do (code, b) <- curlGetString url opts
                           print $ "libcurl finished with code: " ++ show code
-                          print "---------- response body ----------"
-                          print body
+                          print ("---------- response body ----------" :: String)
+                          print b
 
 data TxError
   = MissingField T.Text
@@ -97,11 +93,11 @@ data TxError
 -- | Promote a 'MaybeTransaction' to a fully-checked 'Transaction'.
 toTransaction :: MaybeTransaction -> Either TxError Transaction
 toTransaction (MaybeTransaction ev tid am cur ts) = do
-  event     <- req "event"     ev
-  amount    <- req "amount"    am
-  currency  <- req "currency"  cur
-  timestamp <- req "timestamp" ts
-  pure $ Transaction event tid amount currency timestamp
+  _event     <- req "event"     ev
+  _amount    <- req "amount"    am
+  _currency  <- req "currency"  cur
+  _timestamp <- req "timestamp" ts
+  pure $ Transaction _event tid _amount _currency _timestamp
   where
     req name = maybe (Left $ MissingField name) Right
  
@@ -143,7 +139,7 @@ main = do
               text  msg
               finish
             Right rt -> do
-              mContent <- header "Content-Type"
+              -- mContent <- header "Content-Type"
               mToken   <- header "X-Webhook-Token"   
               liftIO $ B.putStrLn (encode rt)               
               -- liftIO $ print mContent
