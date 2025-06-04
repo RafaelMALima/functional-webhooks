@@ -8,7 +8,7 @@ O programa foi testado usando o Python 3.12.8 e o Cabal 3.0.
 
 Para baixar os requerimentos do servidor python, um requirements.txt está no diretório do servidor.
 
-Para instalar o cabal, a recomendação é via o (GHCUP)[https://www.haskell.org/ghcup/].
+Para instalar o cabal, a recomendação é via o [GHCUP](https://www.haskell.org/ghcup/).
 
 Para fazer a instalação em sistemas unix, basta rodar o seguinte comando na sua shell.
 
