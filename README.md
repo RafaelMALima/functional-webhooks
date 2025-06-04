@@ -12,7 +12,7 @@ Para instalar o cabal, a recomendação é via o [GHCUP](https://www.haskell.org
 
 Para fazer a instalação em sistemas unix, basta rodar o seguinte comando na sua shell.
 
-```curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh```bash
+```curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh```
 
 Com o cabal instalado, faça o download desse repo, e dentro dele, rode o comando 
 ```cabal build``` para compilar o programa, ou ```cabal run``` para compilar e rodar ele.
